@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+      <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <canvas id="canvas" width="1000" height="500"></canvas>
+    <input type="button" class="btn1" value="クリア" onclick="cls();">
+    <input type="button" class="btn2" value="black" onclick="black();">
+    <input type="button" class="btn3" value="orange" onclick="orange();">
+    <input type="button" class="btn4" value="blue" onclick="blue();">
+    <input type="button" class="btn5" value="red" onclick="red();">
+    <input type="button" class="btn6" value="yellow" onclick="yellow();">
+    <input type="button" class="btn7" value="pink" onclick="pink();">
+    <input type="button" class="btn8" value="lightgreen" onclick="green();">
+    <input type="button" class="btn9" value="white" onclick="white();">
+    
+    <input type="button" class="btnA" value="Thickness:1" onclick="t1();">
+    <input type="button" class="btnB" value="Thickness:3" onclick="t3();">
+    <input type="button" class="btnC" value="Thickness:5" onclick="t5();">
+
+
+    <script>
+        var flag = false;
+        var x = 0;
+        var y = 0;
+        var color = 'white';
+        var bold = 1;
+        var canvas = document.getElementById("canvas"); //canvas要素を取得
+        var cc = canvas.getContext("2d");   //canvasの2D描写コンテキストを保持
+
+        // mousedown, mousemove, mouseup にイベントリスナーを追加
+        canvas.addEventListener('mousedown', e => {   //=>はアロー関数
+            x = e.pageX;
+            y = e.pageY;
+            flag = true;
+        });
+
+        canvas.addEventListener('mousemove', e => {
+            if (flag === true) {
+                drawLine(cc, x, y, e.pageX, e.pageY);
+                x = e.pageX;   //x座標更新
+                y = e.pageY;  //y座標更新
+            }
+        });
+        
+        canvas.addEventListener('mouseup', e => {
+            if (flag === true) {
+                flag = false;
+            }
+        });
+        
+        function cls(){
+            //キャンバスの(0,0)～(1000,500)の範囲をクリアする
+            cc.clearRect(0, 0, 1000, 500);
+        }
+
+        function black(){
+            color = 'black';
+        }
+        function orange(){
+            color = 'orange';
+        }
+        function blue(){
+            color = 'blue';
+        }
+        function red(){
+            color = 'red';
+        }
+        function yellow(){
+            color = 'yellow';
+        }
+        function pink(){
+            color = 'pink';
+        }
+        function green(){
+            color = 'lightgreen';
+        }
+        function white(){
+            color = 'white';
+        }
+        function t1(){
+            bold = 1;
+        }
+        function t3(){
+            bold = 3;
+        }
+        function t5(){
+            bold = 5;
+        }
+
+        function drawLine(cc, x1, y1, x2, y2) {     //描画座標を取得して線を描画する関数
+            cc.beginPath();
+            cc.strokeStyle = color;
+            color = cc.lineCap = 'round';
+            cc.lineWidth = bold;
+            cc.moveTo(x1, y1);
+            cc.lineTo(x2, y2);
+            cc.stroke();
+            cc.restore();
+        }
+        
+    </script>
+</body>
+</html>
